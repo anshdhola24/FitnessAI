@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-7 col-md-10">
+    <div class="card glass-card trainer-card">
+      <div class="trainer-header">
+        <h3 class="mb-1">FitAI Coach</h3>
+        <p class="small mb-0 text-secondary">
+          Ask anything about your diet, workouts, or progress. I’ll answer using your latest plan.
+        </p>
+      </div>
+
+      <!-- Chat window -->
+      <div id="trainerChat" class="trainer-chat-window">
+        <!-- Initial bot message -->
+        <div class="trainer-msg trainer-msg-bot">
+          <div class="trainer-avatar">🤖</div>
+          <div class="trainer-bubble">
+            <strong>Hey {{ current_user.name if current_user else "there" }} 👋</strong><br>
+            I’m your FitAI Coach.<br><br>
+            You can ask things like:
+            <ul class="mb-0">
+              <li>“How many calories should I eat per day?”</li>
+              <li>“Suggest today’s meals based on my plan.”</li>
+              <li>“Give me a fat‑loss workout for today.”</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick suggestion chips -->
+      <div class="trainer-quick-row">
+        <button type="button"
+                class="trainer-chip"
+                data-message="How many calories should I eat per day?">
+          Calories for me
+        </button>
+        <button type="button"
+                class="trainer-chip"
+                data-message="Suggest a full day of meals based on my current plan.">
+          Suggest meals
+        </button>
+        <button type="button"
+                class="trainer-chip"
+                data-message="Give me today’s workout based on my plan.">
+          Today’s workout
+        </button>
+        <button type="button"
+                class="trainer-chip"
+                data-message="How fast should I lose fat safely?">
+          Fat‑loss tips
+        </button>
+      </div>
+
+      <!-- Input row -->
+      <form id="trainerForm" class="trainer-input-row" autocomplete="off">
+        <button type="button" id="trainerMicBtn" class="trainer-mic-btn" title="Voice input">
+          🎤
+        </button>
+
+        <input
+          id="trainerInput"
+          type="text"
+          class="trainer-input"
+          placeholder="Ask your coach anything…"
+          maxlength="300"
+          autocomplete="off"
+          required
+        >
+
+        <button type="submit" id="trainerSendBtn" class="btn btn-warning trainer-send-btn">
+          Send
+        </button>
+      </form>
+
+      <p class="trainer-footer small mb-0 text-secondary">
+        Tip: Your coach uses your latest profile and generated plan. Update your profile if your weight or goal changed.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Page‑specific script -->
+<script src="{{ url_for('static', filename='js/trainer.js') }}"></script>
+
+{% endblock %}

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>FitAI Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+    crossorigin="anonymous">
+
+  <!-- Your stylesheets -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tables.css') }}">
+</head>
+<body class="bg-app text-light">
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark app-navbar bg-gradient-primary shadow-lg">
+    <div class="container">
+      <!-- Brand / Logo -->
+      <a class="navbar-brand d-flex align-items-center" href="{{ url_for('dashboard') }}">
+        <div class="logo-badge me-2">
+          <span>F</span>
+        </div>
+        <span class="logo-text">
+          Fit<span class="logo-ai">AI</span> Planner
+        </span>
+      </a>
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+              data-bs-target="#mainNavbar" aria-controls="mainNavbar"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}"
+               href="{{ url_for('dashboard') }}">Dashboard</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'profile' %}active{% endif %}"
+               href="{{ url_for('profile') }}">Profile</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'plans' %}active{% endif %}"
+               href="{{ url_for('plans') }}">Plans</a>
+          </li>
+
+          <!-- FitAI Coach (trainer) -->
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'trainer' %}active{% endif %}"
+               href="{{ url_for('trainer') }}">Coach</a>
+          </li>
+
+          {% if is_admin %}
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}"
+               href="{{ url_for('admin_dashboard') }}">Admin</a>
+          </li>
+          {% endif %}
+
+          <!-- Logout opens stylish modal -->
+          <li class="nav-item ms-lg-2">
+            <a
+              class="nav-link nav-logout"
+              href="#"
+              id="logoutLink"
+            >
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="app-main py-4">
+    <div class="container">
+
+      <!-- Flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-stack">
+            {% for category, message in messages %}
+              <div
+                class="alert alert-{{ category }} flash-alert shadow-sm border-0 alert-dismissible fade show"
+                role="alert"
+              >
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer py-3">
+    <div class="container text-center small text-muted">
+      © {{ 2025 }} FitAI Planner · Built for smart fitness tracking
+    </div>
+  </footer>
+
+  <!-- STYLISH LOGOUT MODAL -->
+  <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background: #020617; border-radius: 18px; border: 1px solid rgba(148,163,184,0.6);">
+        <div
+          class="modal-header border-0"
+          style="background: linear-gradient(135deg, #1d4ed8, #4f46e5); border-radius: 18px 18px 0 0;"
+        >
+          <h5 class="modal-title d-flex align-items-center" id="logoutModalLabel" style="color:#e5e7eb;">
+            <span class="me-2">🚪</span> Confirm Logout
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="color:#e5e7eb;">
+          <p class="mb-1"><strong>Leaving already?</strong></p>
+          <p class="mb-0 small text-secondary">
+            You’ll be logged out of FitAI Planner. You can always log back in to see your plans and progress.
+          </p>
+        </div>
+        <div class="modal-footer border-0 d-flex justify-content-between">
+          <button type="button" class="btn btn-sm btn-outline-light" data-bs-dismiss="modal">
+            Stay Logged In
+          </button>
+          <button type="button" class="btn btn-sm btn-warning" id="confirmLogoutBtn">
+            Yes, Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+  <!-- Global UI scripts: auto-dismiss alerts + stylish logout -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // 1) Auto-dismiss all Bootstrap alerts after 5 seconds
+      const alerts = document.querySelectorAll(".alert");
+      if (alerts.length) {
+        setTimeout(function () {
+          alerts.forEach(function (a) {
+            try {
+              const alertObj = bootstrap.Alert.getOrCreateInstance(a);
+              alertObj.close();
+            } catch (err) {
+              console.error(err);
+            }
+          });
+        }, 5000);
+      }
+
+      // 2) Stylish logout modal
+      const logoutLink = document.getElementById("logoutLink");
+      const logoutModalEl = document.getElementById("logoutModal");
+      const confirmBtn = document.getElementById("confirmLogoutBtn");
+      const logoutUrl = "{{ url_for('logout') }}";
+
+      if (logoutLink && logoutModalEl && confirmBtn) {
+        const logoutModal = new bootstrap.Modal(logoutModalEl);
+
+        logoutLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          logoutModal.show();
+        });
+
+        confirmBtn.addEventListener("click", function () {
+          window.location.href = logoutUrl;
+        });
+      }
+    });
+  </script>
+
+  <!-- FitAI Coach front-end -->
+  <script src="{{ url_for('static', filename='js/trainer.js') }}"></script>
+</body>
+</html>

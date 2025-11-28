@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row align-items-center g-4">
+  <div class="col-md-6">
+    <span class="hero-badge mb-3">
+      <span>AI POWERED</span>
+      <span>Personal Fitness & Diet Engine</span>
+    </span>
+    <h1 class="hero-title mb-3">
+      Turn your body data into a
+      <span class="hero-highlight">smart health plan.</span>
+    </h1>
+    <p class="lead mb-4">
+      FitAI Planner builds a personalised workout split and calorie-perfect meal plan
+      using your age, gender, BMI, activity level and goal — all in a few seconds.
+    </p>
+    <div class="d-flex gap-3 mb-3">
+      <a href="{{ url_for('register') }}" class="btn btn-warning btn-lg">Get Started</a>
+      <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">I already have an account</a>
+    </div>
+    <p class="small text-secondary">No trainer. No guesswork. Just clean, data‑driven plans.</p>
+  </div>
+
+  <div class="col-md-6">
+    <div class="glass-card p-4">
+      <h5 class="mb-3">Live Preview</h5>
+      <ul class="mb-0">
+        <li>AI‑generated diet with calorie split</li>
+        <li>5‑day intelligent workout routine</li>
+        <li>Weight progress chart & goal tracking</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
