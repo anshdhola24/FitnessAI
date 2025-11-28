@@ -1,0 +1,266 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FixItNow — Local Repair Booking</title>
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --accent:#0d6efd; /* primary blue */
+      --muted:#6c757d;
+      --card-bg: #ffffff;
+      --page-bg: #f8fafc;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    body{background:var(--page-bg);}
+    .hero{background: linear-gradient(90deg, rgba(13,110,253,0.06), rgba(13,110,253,0.03)); padding:60px 0}
+    .brand{font-weight:700; color:var(--accent)}
+    .feature-icon{width:64px;height:64px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(11,21,40,0.06)}
+    .card-quiet{background:linear-gradient(180deg,#fff,#fbfdff);border:0;border-radius:12px;box-shadow:0 6px 24px rgba(11,21,40,0.04)}
+    footer{padding:24px 0;background:#fff;margin-top:40px}
+    /* Responsive tweaks */
+    @media (max-width:576px){
+      .hero{padding:32px 0}
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#home">
+        <span class="brand">FixItNow</span>
+        <small class="text-muted">Local Repair Booking</small>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <a href="#booking" class="btn btn-outline-primary ms-lg-3">Book Now</a>
+      </div>
+    </div>
+  </nav>  <!-- HERO / HOME -->  <header id="home" class="hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4">
+          <h1 class="display-5 fw-bold">FixItNow — Book trusted local repair technicians quickly</h1>
+          <p class="lead text-muted">Find certified electricians, plumbers, AC technicians and more. Compare ratings, get instant quotes, and schedule same-day visits in your neighborhood.</p>
+          <div class="d-flex gap-2">
+            <a class="btn btn-primary btn-lg" href="#booking">Book a Technician</a>
+            <a class="btn btn-outline-secondary btn-lg" href="#services">Explore Services</a>
+          </div>
+          <div class="mt-4 small text-muted">Serving neighborhoods across your city. Free cancellation within 2 hours.</div><!-- PERSONALIZE: Replace the placeholders below with your name and enrollment number -->
+      <div class="mt-4 p-3 card-quiet">
+        <strong>Project by:</strong>
+        <div><!--PERSONALIZE-->Ansh Dhola <br> Enrollment No: 240905040024</div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card card-quiet p-4">
+        <h5 class="mb-3">Quick Booking</h5>
+        <form id="bookingForm">
+          <div class="mb-2">
+            <input class="form-control" type="text" id="customerName" placeholder="Your name" required>
+          </div>
+          <div class="mb-2 row g-2">
+            <div class="col-6"><input class="form-control" type="tel" id="phone" placeholder="Phone" required></div>
+            <div class="col-6"><input class="form-control" type="text" id="location" placeholder="Location / Pin code" required></div>
+          </div>
+          <div class="mb-2">
+            <select class="form-select" id="serviceType" required>
+              <option value="">Select Service</option>
+              <option>Electrician</option>
+              <option>Plumber</option>
+              <option>AC Repair</option>
+              <option>Appliance Repair</option>
+              <option>Carpentry</option>
+            </select>
+          </div>
+          <div class="mb-2 d-grid">
+            <button type="submit" class="btn btn-primary">Request Quote</button>
+          </div>
+          <div id="bookingMsg" class="small text-success d-none">Thanks! Your booking request was submitted.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </header>  <!-- ABOUT -->  <section id="about" class="py-5">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-md-6">
+          <h2>About FixItNow</h2>
+          <p class="text-muted">Many people struggle to find reliable repair services quickly. FixItNow addresses this by connecting users with local certified technicians, showing ratings and fees upfront and enabling easy bookings.</p>
+          <ul class="list-unstyled">
+            <li class="mb-2"><strong>Verified Professionals:</strong> Background-checked and rated by customers.</li>
+            <li class="mb-2"><strong>Transparent Pricing:</strong> Get instant estimated quotes before you book.</li>
+            <li class="mb-2"><strong>Fast Scheduling:</strong> Same-day or next-day service slots.</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <div class="row g-3">
+            <div class="col-6">
+              <div class="feature-icon mx-auto mb-2">🔌</div>
+              <h6 class="text-center">Electrician</h6>
+            </div>
+            <div class="col-6">
+              <div class="feature-icon mx-auto mb-2">🚰</div>
+              <h6 class="text-center">Plumber</h6>
+            </div>
+            <div class="col-6">
+              <div class="feature-icon mx-auto mb-2">❄</div>
+              <h6 class="text-center">AC Repair</h6>
+            </div>
+            <div class="col-6">
+              <div class="feature-icon mx-auto mb-2">🔧</div>
+              <h6 class="text-center">Appliance</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- SERVICES -->  <section id="services" class="py-5 bg-white">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="mb-0">Services</h3>
+        <small class="text-muted">Choose a category to see examples & pricing</small>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="card card-quiet p-3 h-100">
+            <h5>Electrician</h5>
+            <p class="text-muted small">Light fittings, rewiring, switchboard repairs.</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div><strong>From ₹300</strong></div>
+              <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="Electrician">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-quiet p-3 h-100">
+            <h5>Plumber</h5>
+            <p class="text-muted small">Leak repairs, pipe replacement, drain cleaning.</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div><strong>From ₹350</strong></div>
+              <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="Plumber">Book</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-quiet p-3 h-100">
+            <h5>AC Repair</h5>
+            <p class="text-muted small">Gas top-up, compressor checks, cleaning.</p>
+            <div class="mt-auto d-flex justify-content-between align-items-center">
+              <div><strong>From ₹800</strong></div>
+              <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#serviceModal" data-service="AC Repair">Book</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- CONTACT -->  <section id="contact" class="py-5">
+    <div class="container">
+      <h3>Contact & Feedback</h3>
+      <p class="text-muted">Have questions or suggestions? Drop us a message.</p>
+      <div class="row">
+        <div class="col-md-6">
+          <form id="contactForm">
+            <div class="mb-2"><input class="form-control" type="text" id="cname" placeholder="Your name" required></div>
+            <div class="mb-2"><input class="form-control" type="email" id="cemail" placeholder="Email" required></div>
+            <div class="mb-2"><textarea class="form-control" id="cmsg" rows="4" placeholder="Message"></textarea></div>
+            <div class="d-grid"><button type="submit" class="btn btn-primary">Send Message</button></div>
+            <div id="contactMsg" class="small text-success d-none mt-2">Message sent. We'll respond soon.</div>
+          </form>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-quiet p-3">
+            <h6>Our Office</h6>
+            <p class="small text-muted mb-1">123 Neighborhood Plaza, Your City</p>
+            <p class="small text-muted mb-1">Phone: +91 9904020140</p>
+            <p class="small text-muted">Email: anshdhola05@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>  <!-- FOOTER -->  <footer>
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="small text-muted">© FixItNow 2025</div>
+      <div>
+        <a href="#" class="text-muted me-3">Privacy</a>
+        <a href="#" class="text-muted">Terms</a>
+      </div>
+    </div>
+  </footer>  <!-- SERVICE MODAL -->  <div class="modal fade" id="serviceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Book Service</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="modalForm">
+            <div class="mb-2"><input class="form-control" id="mname" placeholder="Your name" required></div>
+            <div class="mb-2"><input class="form-control" id="mphone" placeholder="Phone" required></div>
+            <div class="mb-2"><input class="form-control" id="maddress" placeholder="Address / Pincode" required></div>
+            <div class="mb-2"><input class="form-control" id="mservice" readonly></div>
+            <div class="d-grid"><button class="btn btn-primary" type="submit">Confirm Booking</button></div>
+          </form>
+          <div id="modalMsg" class="small text-success d-none mt-2">Booking confirmed! Technician will call you.</div>
+        </div>
+      </div>
+    </div>
+  </div>  <!-- SCRIPTS -->  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>  <script>
+    // Simple client-side form interactions (no backend)
+    document.getElementById('bookingForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      // simulate success
+      document.getElementById('bookingMsg').classList.remove('d-none');
+      setTimeout(()=> document.getElementById('bookingMsg').classList.add('d-none'),3000);
+      this.reset();
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      document.getElementById('contactMsg').classList.remove('d-none');
+      setTimeout(()=> document.getElementById('contactMsg').classList.add('d-none'),3000);
+      this.reset();
+    });
+
+    // Pre-fill modal with service name
+    var serviceModal = document.getElementById('serviceModal');
+    serviceModal.addEventListener('show.bs.modal', function (event) {
+      var button = event.relatedTarget;
+      var service = button.getAttribute('data-service') || 'Service';
+      document.getElementById('mservice').value = service;
+      document.getElementById('modalMsg').classList.add('d-none');
+    });
+
+    document.getElementById('modalForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      document.getElementById('modalMsg').classList.remove('d-none');
+      setTimeout(()=>{var modal = bootstrap.Modal.getInstance(serviceModal); modal.hide();},1500);
+      this.reset();
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a.nav-link').forEach(a=>{
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        var target = document.querySelector(this.getAttribute('href'));
+        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  </script></body>
+</html>
