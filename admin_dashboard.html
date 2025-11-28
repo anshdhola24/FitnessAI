@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-3">Admin Panel</h3>
+<p class="text-secondary mb-4">
+  Overview of all registered users, their profiles, generated plans, and progress.
+</p>
+
+<div class="card glass-card">
+  <div class="card-body table-responsive">
+    <table class="fitai-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>Email</th>
+          <th>Age / Gender</th>
+          <th>Height / Weight</th>
+          <th>Goal</th>
+          <th>Plans</th>
+          <th>Progress Entries</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <th>{{ loop.index }}</th>
+          <td>{{ u.name }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.age }} / {{ u.gender }}</td>
+          <td>{{ u.height_cm }} cm / {{ u.weight_kg }} kg</td>
+          <td>{{ u.goal }}</td>
+          <td>{{ u.plan_count }}</td>
+          <td>{{ u.progress_count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

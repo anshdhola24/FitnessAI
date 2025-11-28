@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 class="mb-3">Your Smart Plan</h3>
+
+{% if plan %}
+
+<!-- Preferences form: Diet + Workout category -->
+<form method="get" action="{{ url_for('generate_plans') }}" class="row g-3 mb-4">
+  <div class="col-md-6">
+    <div class="card glass-card h-100">
+      <div class="card-body">
+        <h5 class="mb-3">Diet Preference</h5>
+
+        {# current diet selection from saved plan or default 'veg' #}
+        {% set current_diet = diet_plan.diet_type if diet_plan.diet_type is defined else 'veg' %}
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="diet"
+            id="dietVeg"
+            value="veg"
+            {% if current_diet == 'veg' %}checked{% endif %}
+          >
+          <label class="form-check-label" for="dietVeg">Veg</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="diet"
+            id="dietNonVeg"
+            value="nonveg"
+            {% if current_diet == 'nonveg' %}checked{% endif %}
+          >
+          <label class="form-check-label" for="dietNonVeg">Non‑Veg</label>
+        </div>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="diet"
+            id="dietMixed"
+            value="mixed"
+            {% if current_diet == 'mixed' %}checked{% endif %}
+          >
+          <label class="form-check-label" for="dietMixed">Veg + Non‑Veg Mix</label>
+        </div>
+
+        <div class="form-text mt-2">
+          Choose how you prefer your meals to be generated.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card glass-card h-100">
+      <div class="card-body">
+        <h5 class="mb-3">Workout Category</h5>
+
+        {# current workout focus from plan or default 'general' #}
+        {% set current_focus = workout_plan.focus if workout_plan.focus is defined else 'general' %}
+
+        <select name="workout" class="form-select">
+          <option value="strength" {% if current_focus == 'strength' %}selected{% endif %}>
+            1) Strength Training (Weights)
+          </option>
+          <option value="calisthenics" {% if current_focus == 'calisthenics' %}selected{% endif %}>
+            2) Calisthenics (Bodyweight)
+          </option>
+          <option value="cardio" {% if current_focus == 'cardio' %}selected{% endif %}>
+            3) Cardio Training
+          </option>
+          <option value="hiit" {% if current_focus == 'hiit' %}selected{% endif %}>
+            4) HIIT (High Intensity)
+          </option>
+          <option value="mobility" {% if current_focus == 'mobility' %}selected{% endif %}>
+            5) Mobility & Flexibility
+          </option>
+          <option value="sports" {% if current_focus == 'sports' %}selected{% endif %}>
+            6) Sports Training
+          </option>
+          <option value="functional" {% if current_focus == 'functional' %}selected{% endif %}>
+            7) Functional Training
+          </option>
+          <option value="core" {% if current_focus == 'core' %}selected{% endif %}>
+            8) Core Training
+          </option>
+          <option value="endurance" {% if current_focus == 'endurance' %}selected{% endif %}>
+            9) Endurance Training
+          </option>
+          <option value="power" {% if current_focus == 'power' %}selected{% endif %}>
+            10) Power / Explosive
+          </option>
+          <option value="custom" {% if current_focus == 'custom' %}selected{% endif %}>
+            Custom – I will design my own
+          </option>
+        </select>
+
+        <div class="form-text mt-2">
+          This controls how your weekly workout schedule is generated.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 text-end">
+    <button class="btn btn-warning px-4">
+      Save &amp; Regenerate Plan
+    </button>
+  </div>
+</form>
+
+<!-- Stats row -->
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card glass-card stat-card">
+      <div class="card-body text-center">
+        <div class="stat-label">BMI</div>
+        <div class="stat-value">{{ plan.bmi }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card glass-card stat-card">
+      <div class="card-body text-center">
+        <div class="stat-label">BMR</div>
+        <div class="stat-value">{{ plan.bmr }}</div>
+        <div class="stat-sub">kcal / day</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card glass-card stat-card">
+      <div class="card-body text-center">
+        <div class="stat-label">Target Calories</div>
+        <div class="stat-value">{{ plan.calories_target }}</div>
+        <div class="stat-sub">kcal / day</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Diet + Workout cards -->
+<div class="row g-4">
+  <!-- Diet -->
+  <div class="col-md-6">
+    <div class="card glass-card h-100">
+      <div class="card-body">
+        <h5 class="mb-3">AI Diet Plan</h5>
+        <p class="small text-secondary mb-2">
+          {{ diet_plan.focus }}
+        </p>
+        <ul class="list-unstyled mb-0">
+          <li class="mb-2">
+            <strong>Breakfast:</strong> {{ diet_plan.breakfast }}
+          </li>
+          <li class="mb-2">
+            <strong>Lunch:</strong> {{ diet_plan.lunch }}
+          </li>
+          <li class="mb-2">
+            <strong>Dinner:</strong> {{ diet_plan.dinner }}
+          </li>
+          <li class="mb-2">
+            <strong>Snacks:</strong> {{ diet_plan.snacks }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Workout -->
+  <div class="col-md-6">
+    <div class="card glass-card h-100">
+      <div class="card-body">
+        <h5 class="mb-3">AI Workout Plan</h5>
+        <p class="small text-secondary mb-2">
+          {{ workout_plan.level }}
+        </p>
+
+        {% if workout_plan.focus == "custom" %}
+          <p class="small text-warning mb-3">
+            Custom mode: edit your own routine below and click
+            <strong>Save Custom Plan</strong>.
+          </p>
+
+          <form method="post" action="{{ url_for('save_custom_workout') }}">
+            <div class="mb-2">
+              <label class="form-label small">Day 1</label>
+              <input
+                type="text"
+                name="day1"
+                class="form-control form-control-sm"
+                value="{{ workout_plan.workouts[0] if workout_plan.workouts|length > 0 else '' }}"
+              >
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Day 2</label>
+              <input
+                type="text"
+                name="day2"
+                class="form-control form-control-sm"
+                value="{{ workout_plan.workouts[1] if workout_plan.workouts|length > 1 else '' }}"
+              >
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Day 3</label>
+              <input
+                type="text"
+                name="day3"
+                class="form-control form-control-sm"
+                value="{{ workout_plan.workouts[2] if workout_plan.workouts|length > 2 else '' }}"
+              >
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Day 4</label>
+              <input
+                type="text"
+                name="day4"
+                class="form-control form-control-sm"
+                value="{{ workout_plan.workouts[3] if workout_plan.workouts|length > 3 else '' }}"
+              >
+            </div>
+            <div class="mb-2">
+              <label class="form-label small">Day 5</label>
+              <input
+                type="text"
+                name="day5"
+                class="form-control form-control-sm"
+                value="{{ workout_plan.workouts[4] if workout_plan.workouts|length > 4 else '' }}"
+              >
+            </div>
+
+            <button class="btn btn-sm btn-warning mt-2">
+              Save Custom Plan
+            </button>
+          </form>
+        {% else %}
+          <ol class="mb-0">
+            {% for w in workout_plan.workouts %}
+              <li class="mb-2">{{ w }}</li>
+            {% endfor %}
+          </ol>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Download as PDF -->
+<div class="mt-4 text-end">
+  <a href="{{ url_for('download_plan') }}" class="btn btn-outline-light">
+    Download Plan as PDF
+  </a>
+</div>
+
+{% else %}
+  <p>
+    No plan found.
+    <a href="{{ url_for('profile') }}">Complete your profile</a> to generate one.
+  </p>
+{% endif %}
+
+{% endblock %}
